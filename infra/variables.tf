@@ -9,7 +9,8 @@ variable "region" {
 }
 
 variable "github_token" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "github_repo" {
@@ -19,14 +20,17 @@ variable "github_repo" {
 
 variable "github_user" {
   type = string
+  default = "atomtay"
 }
 
 variable "access_key" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "secret_key" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "project_name" {

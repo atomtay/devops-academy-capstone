@@ -6,15 +6,25 @@ resource "aws_s3_bucket" "frontend" {
   #checkov:skip=CKV_AWS_20:Website should be publicly accessible
   #checkov:skip=CKV_AWS_21:Versioning of websited is handled through git
   #checkov:skip=CKV_AWS_145:Don't encrypt publicly accessible website
+  bucket = random_uuid.random_id.id
 }
 
 resource "aws_s3_bucket_policy" "frontend" {
+  bucket = aws_s3_bucket.frontend.id
+  policy = data.aws_iam_policy_document.frontend.json
 }
 
 data "aws_iam_policy_document" "frontend" {
+  statement {
+    effect    = "Allow"
+    actions   = ["s3:GetObject"]
+    resources = [aws_s3_bucket.frontend.arn]
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "frontend" {
+  bucket              = aws_s3_bucket.frontend.id
+  block_public_policy = true
   #checkov:skip=CKV_AWS_53:Website should be publicly accessible
   #checkov:skip=CKV_AWS_54:Website should be publicly accessible
   #checkov:skip=CKV_AWS_55:Website should be publicly accessible
