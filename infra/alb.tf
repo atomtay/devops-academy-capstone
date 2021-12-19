@@ -19,6 +19,8 @@ resource "aws_lb" "backend_server" {
   }
 }
 
+/*
+
 resource "aws_lb_target_group" "backend_server_8080" {
   name                 = "${var.project_name}-8080"
   port                 = 8080
@@ -70,3 +72,4 @@ resource "aws_lb_listener" "backend_server_redirect" {
     }
   }
 }
+*/

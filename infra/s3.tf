@@ -6,7 +6,8 @@ resource "aws_s3_bucket" "frontend" {
   #checkov:skip=CKV_AWS_20:Website should be publicly accessible
   #checkov:skip=CKV_AWS_21:Versioning of websited is handled through git
   #checkov:skip=CKV_AWS_145:Don't encrypt publicly accessible website
-  bucket = random_uuid.random_id.id
+  bucket           = random_uuid.random_id.id
+  website_endpoint = "http://${random_uuid.random_id.id}.s3-website-${var.region}.amazonaws.com"
 }
 
 resource "aws_s3_bucket_policy" "frontend" {
@@ -16,9 +17,13 @@ resource "aws_s3_bucket_policy" "frontend" {
 
 data "aws_iam_policy_document" "frontend" {
   statement {
-    effect    = "Allow"
-    actions   = ["s3:GetObject"]
-    resources = [aws_s3_bucket.frontend.arn]
+    effect     = "Allow"
+    actions    = ["s3:GetObject"]
+    resources  = [aws_s3_bucket.frontend.arn]
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
   }
 }
 
