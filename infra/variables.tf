@@ -33,6 +33,16 @@ variable "secret_key" {
   sensitive = true
 }
 
+variable "account_id" {
+  type      = string
+  sensitive = true
+}
+
+variable "iam_user" {
+  type      = string
+  sensitive = true
+}
+
 variable "project_name" {
   type    = string
   default = "todo"

@@ -1,5 +1,7 @@
+/*
 resource "aws_lb" "backend_server" {
   #checkov:skip=CKV_AWS_150:Disable deletion protection since this is a learning project
+  
   name                       = "${var.project_name}-backend-server"
   enable_deletion_protection = false
   internal                   = false
@@ -70,3 +72,4 @@ resource "aws_lb_listener" "backend_server_redirect" {
     }
   }
 }
+*/

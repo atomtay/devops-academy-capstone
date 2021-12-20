@@ -1,3 +1,5 @@
+/*
+
 resource "aws_security_group" "backend_server" {
   #checkov:skip=CKV_AWS_24:Enable ssh access from all sources since we don't have access to private GH Actions runners
   vpc_id = aws_vpc.main.id
@@ -66,3 +68,5 @@ resource "aws_instance" "backend_server" {
   tags                   = var.aws_tags
 
 }
+
+*/

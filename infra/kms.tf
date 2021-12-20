@@ -1,3 +1,5 @@
+/*
+
 resource "aws_kms_key" "project" {
   description         = "${var.project_name}-key"
   policy              = data.aws_iam_policy_document.kms_key.json
@@ -55,3 +57,4 @@ data "aws_iam_policy_document" "kms_key" {
   }
 }
 
+*/
