@@ -4,7 +4,7 @@ resource "aws_security_group" "backend_server" {
   vpc_id = aws_vpc.main.id
   
   egress {
-    description = "Allow egress from all sources on all ports"
+    description = "Allow egress/outbound from all sources on all ports"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -12,7 +12,7 @@ resource "aws_security_group" "backend_server" {
   }
 
   ingress {
-    description = "Allow ingress from all sources on port 443"
+    description = "HTTPS: Allow ingress from all sources on port 443"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
