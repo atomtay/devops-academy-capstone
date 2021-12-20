@@ -1,8 +1,7 @@
-/* resource "aws_db_subnet_group" "main" {
+resource "aws_db_subnet_group" "main" {
   name       = "main"
   subnet_ids = aws_subnet.main.*.id
 }
-*/
 
 resource "random_password" "postgres_admin_password" {
   length  = 32
@@ -14,8 +13,6 @@ resource "random_password" "postgres_app_password" {
   special = false
 }
 
-/*
-
 resource "aws_db_instance" "postgres" {
   #checkov:skip=CKV_AWS_17:Create public IP because we don't have access to private GH Actions runners
 
@@ -26,6 +23,7 @@ resource "aws_db_instance" "postgres" {
   engine            = "postgres"
   password          = random_password.postgres_admin_password.result
   username          = "main"
+  multi_az          = true
 
   lifecycle {
     ignore_changes = [
@@ -34,5 +32,3 @@ resource "aws_db_instance" "postgres" {
     ]
   }
 }
-
-*/

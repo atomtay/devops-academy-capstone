@@ -10,8 +10,6 @@ output "aws_ec2_instance_ips" {
   value = join(" ", aws_instance.backend_server.*.public_ip)
 }
 
-/*
 output "postgres_db_endpoint" {
   value = aws_db_instance.postgres.endpoint
 }
-*/
