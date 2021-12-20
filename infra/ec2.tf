@@ -1,4 +1,3 @@
-/*
 
 resource "aws_security_group" "backend_server" {
   #checkov:skip=CKV_AWS_24:Enable ssh access from all sources since we don't have access to private GH Actions runners
@@ -62,11 +61,10 @@ resource "aws_instance" "backend_server" {
   instance_type          = "t3.micro"
   ami                    = data.aws_ami.ubuntu.id
   count                  = 3
+  subnet_id              = aws_subnet.main[count.index].id
   vpc_security_group_ids = [aws_security_group.backend_server.id]
-  iam_instance_profile   = aws_iam_instance_profile.backend_server.name
+  # iam_instance_profile   = aws_iam_instance_profile.backend_server.name # TOD: create iam instance profile for EC2
 
   tags                   = var.aws_tags
 
 }
-
-*/
