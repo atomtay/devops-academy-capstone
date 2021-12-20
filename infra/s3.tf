@@ -8,7 +8,12 @@ resource "aws_s3_bucket" "frontend" {
   #checkov:skip=CKV_AWS_145:Don't encrypt publicly accessible website
 
   bucket           = random_uuid.random_id.id
+  acl              = "public-read"
   website_endpoint = "http://${random_uuid.random_id.id}.s3-website-${var.region}.amazonaws.com"
+  website {
+    index_document = "index.html"
+    error_document = "404.html"
+  }
 }
 
 resource "aws_s3_bucket_policy" "frontend" {
