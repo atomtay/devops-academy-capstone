@@ -57,14 +57,15 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "backend_server" {
   #checkov:skip=CKV_AWS_88:Allow public IP for ssh access deploy since we don't have access to private GH Actions runners
   
-  depends_on             = [aws_route_table.main]
-  instance_type          = "t3.micro"
-  ami                    = data.aws_ami.ubuntu.id
-  count                  = 3
-  subnet_id              = aws_subnet.main[count.index].id
-  vpc_security_group_ids = [aws_security_group.backend_server.id]
-  # iam_instance_profile   = aws_iam_instance_profile.backend_server.name # TOD: create iam instance profile for EC2
+  depends_on                  = [aws_route_table.main]
+  instance_type               = "t3.micro"
+  ami                         = data.aws_ami.ubuntu.id
+  count                       = 3
+  subnet_id                   = aws_subnet.main[count.index].id
+  vpc_security_group_ids      = [aws_security_group.backend_server.id]
+  iam_instance_profile        = aws_iam_instance_profile.backend_server.name
+  associate_public_ip_address = true
 
-  tags                   = var.aws_tags
+  tags                        = var.aws_tags
 
 }
