@@ -23,7 +23,7 @@ resource "aws_s3_bucket_public_access_block" "frontend" {
   #checkov:skip=CKV_AWS_56:Website should be publicly accessible
   
   bucket              = aws_s3_bucket.frontend.id
-  block_public_policy = false
+  block_public_policy = true
 }
 
 resource "aws_s3_bucket" "logging" {
