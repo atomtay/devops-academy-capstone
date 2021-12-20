@@ -17,12 +17,12 @@ resource "aws_s3_bucket_policy" "frontend" {
 
 data "aws_iam_policy_document" "frontend" {
   statement {
-    effect     = "Allow"
-    actions    = ["s3:GetObject"]
-    resources  = [aws_s3_bucket.frontend.arn]
+    effect        = "Allow"
+    actions       = ["s3:GetObject"]
+    resources     = [aws_s3_bucket.frontend.arn]
     principals {
-      type        = "*"
-      identifiers = ["*"]
+      type        = "AWS"
+      identifiers = [aws_iam_role.project.arn]
     }
   }
 }
