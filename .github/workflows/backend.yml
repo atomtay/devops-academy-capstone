@@ -79,5 +79,6 @@ jobs:
         working-directory: todo-backend
         run: make dist
       - name: Copy private key
-        working-directory: /
-        run: printf ${{ secrets.BASE64_SSH_PRIVATE_KEY }} | base64 -d > private_key && \ chmod 0600 private_key
+        working-directory: todo-backend
+        run: printf ${{ secrets.BASE64_SSH_PRIVATE_KEY }} | base64 -d > private_key && \
+          chmod 0600 private_key
