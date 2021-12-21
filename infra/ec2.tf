@@ -57,6 +57,7 @@ resource "aws_instance" "backend_server" {
   vpc_security_group_ids      = [aws_security_group.backend_server.id]
   iam_instance_profile        = aws_iam_instance_profile.backend_server.name
   associate_public_ip_address = true
+  key_name                    = aws_key_pair.ssh_key.key_name
 
   tags                        = var.aws_tags
 
