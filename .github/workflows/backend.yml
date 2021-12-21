@@ -109,7 +109,10 @@ jobs:
           for i in ${{ secrets.EC2_INSTANCE_IPS }}; do
             echo "Starting service on $i...";
             ssh -i ./private_key ${{ secrets.EC2_INSTANCE_USER }}@$i 'sudo systemctl is-enabled --quiet todo || sudo systemctl enable todo';
+            echo "Finish step 1";
             ssh -i ./private_key ${{ secrets.EC2_INSTANCE_USER }}@$i 'sudo systemctl start todo';
+            echo "Finish step 2"
             ssh -i ./private_key ${{ secrets.EC2_INSTANCE_USER }}@$i 'sudo systemctl is-active --quiet todo';
+            echo "Finish step 3, restart loop or exit"
           done
 
