@@ -85,6 +85,12 @@ jobs:
           chmod 0600 private_key
       - name: Write .env file
         working-directory: todo-backend
+        env:
+          APP_BIND_ADDRESS: 0.0.0.0:8080
+          POSTGRES_ADDRESS: ${{ secrets.POSTGRES_ADDRESS }}
+          POSTGRES_USERNAME: ${{ secrets.POSTGRES_APP_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_APP_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DATABASE }}
         run: envsubst < .env.template > dist/todo.env
       - name: Deploy updated files to EC2 instances
         working-directory: todo-backend
