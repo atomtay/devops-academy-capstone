@@ -86,3 +86,30 @@ jobs:
       - name: Write .env file
         working-directory: todo-backend
         run: envsubst < .env.template > dist/todo.env
+      - name: Deploy updated files to EC2 instances
+        working-directory: todo-backend
+        run: |
+          for i in ${{ secrets.EC2_INSTANCE_IPS }}; do
+            echo "Starting deploy to $i...";
+            echo "  Stopping service if running...";
+            ssh -i ./private_key -o StrictHostKeyChecking=no ${{ secrets.EC2_INSTANCE_USER }}@$i 'sudo systemctl is-active --quiet todo && sudo systemctl stop todo || exit 0';
+            echo "  Copying files to instance...";
+            scp -ri ./private_key dist ${{ secrets.EC2_INSTANCE_USER }}@$i:~/todo;
+            echo "  Moving files into place on instance...";
+            ssh -i ./private_key ${{ secrets.EC2_INSTANCE_USER }}@$i '
+              sudo rm -rf /opt/todo &&
+              sudo mv ~/todo /opt/todo &&
+              sudo ln -sfn /opt/todo/todo /usr/local/bin/todo &&
+              sudo ln -sfn /opt/todo/todo.service /etc/systemd/system/todo.service &&
+              sudo systemctl daemon-reload';
+          done
+      - name: Restart service
+        working-directory: todo-backend
+        run: |
+          for i in ${{ secrets.EC2_INSTANCE_IPS }}; do
+            echo "Starting service on $i...";
+            ssh -i ./private_key ${{ secrets.EC2_INSTANCE_USER }}@$i 'sudo systemctl is-enabled --quiet todo || sudo systemctl enable todo';
+            ssh -i ./private_key ${{ secrets.EC2_INSTANCE_USER }}@$i 'sudo systemctl start todo';
+            ssh -i ./private_key ${{ secrets.EC2_INSTANCE_USER }}@$i 'sudo systemctl is-active --quiet todo';
+          done
+
