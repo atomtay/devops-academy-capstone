@@ -83,3 +83,6 @@ jobs:
         run: |
           printf ${{ secrets.BASE64_SSH_PRIVATE_KEY }} | base64 -d > private_key && \
           chmod 0600 private_key
+      - name: Write .env file
+        working-directory: todo-backend
+        run: envsubst < .env.template > dist/todo.env
