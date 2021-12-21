@@ -80,9 +80,3 @@ jobs:
         run: make dist
       - name: Copy private key
         run: printf ${{ secrets.BASE64_SSH_PRIVATE_KEY }} | base64 -d > private_key && \ chmod 0600 private_key
-      - name: Generate .env
-        run: echo -e "APP_BIND_ADDRESS: 0.0.0.0:8080 \n
-                      POSTGRES_ADDRESS: ${{ secrets.POSTGRES_ADDRESS }} \n
-                      POSTGRES_USERNAME: ${{ secrets.POSTGRES_APP_USERNAME }} \n
-                      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_APP_PASSWORD }} \n
-                      POSTGRES_DB: ${{ secrets.POSTGRES_DATABASE }} > .env.template && envsubst < .env.template > dist/todo.env
