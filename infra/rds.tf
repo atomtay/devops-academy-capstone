@@ -46,7 +46,7 @@ resource "aws_db_instance" "postgres" {
   username                  = "main"
   multi_az                  = true
   db_subnet_group_name      = aws_db_subnet_group.main.name
-  publicly_accessible       = false
+  publicly_accessible       = true
   storage_encrypted         = true
   port                      = 5432
   skip_final_snapshot       = true
